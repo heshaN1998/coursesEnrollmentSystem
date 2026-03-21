@@ -1,13 +1,12 @@
-package lk.heshan.course_enrollment_system.service.impl;
-
+package lk.heshan.course_enrollment_system.impl;
+import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
 import lk.heshan.course_enrollment_system.service.StudentService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class StudentServiceIMPL implements StudentService {
+
     @Override
     public void saveStudent(UserDTO student) {
 
@@ -15,7 +14,17 @@ public class StudentServiceIMPL implements StudentService {
 
     @Override
     public UserDTO getSelectedStudent(String studentId) {
-        return null;
+        return new UserDTO(
+                "U001",
+                "Heshan",
+                "Perera",
+                "No 123",
+                "Main Street",
+                "Colombo 05",
+                "Colombo",
+                "1234",
+                Role.STUDENT);
+
     }
 
     @Override

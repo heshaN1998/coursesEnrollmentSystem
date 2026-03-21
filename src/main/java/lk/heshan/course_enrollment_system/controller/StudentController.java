@@ -2,6 +2,8 @@ package lk.heshan.course_enrollment_system.controller;
 
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
+import lk.heshan.course_enrollment_system.impl.StudentServiceIMPL;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/student")
 
 public class StudentController {
-//save Student
+    //save Student
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> saveStudent(@RequestBody UserDTO userDTO) {
@@ -24,20 +26,13 @@ public class StudentController {
     @GetMapping(value = "{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getSelectedStudent(@PathVariable String studentId){
         System.out.println("Student ID"+studentId);
+        var studentServiceIMPL=new StudentServiceIMPL();
+        var selectedStudent = studentServiceIMPL.getSelectedStudent(studentId);
 
-        var userDTO=new UserDTO(
-                 "U001",
-                 "Heshan",
-                "Perera",
-                 "No 123",
-                 "Main Street",
-                 "Colombo 05",
-                "Colombo",
-                "1234",
-                Role.STUDENT
-                );
-    if (studentId.equals(userDTO.getUserId())){
-        return new ResponseEntity<>(userDTO,HttpStatus.OK);
+    if (studentId.equals(selectedStudent.getUserId())){
+        studentServiceIMPL.getSelectedStudent(studentId);
+        return new ResponseEntity<>(selectedStudent,HttpStatus.OK);
+
     }
     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
