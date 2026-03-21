@@ -1,6 +1,5 @@
 package lk.heshan.course_enrollment_system.controller;
 
-import com.sun.source.tree.ReturnTree;
 import lk.heshan.course_enrollment_system.dto.CourseMaterialDTO;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

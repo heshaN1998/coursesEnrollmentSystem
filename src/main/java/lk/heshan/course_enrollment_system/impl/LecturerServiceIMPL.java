@@ -1,26 +1,23 @@
 package lk.heshan.course_enrollment_system.impl;
+
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
-import lk.heshan.course_enrollment_system.service.StudentService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lk.heshan.course_enrollment_system.service.LecturerService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-
 @Service
-public class StudentServiceIMPL implements StudentService {
-
+public class LecturerServiceIMPL implements LecturerService {
     @Override
-    public void saveStudent(UserDTO student) {
+    public void saveLecturer(UserDTO lecturer) {
 
     }
 
     @Override
-    public UserDTO getSelectedStudent(String studentId) throws Exception {
-        UserDTO selectedStudent= new UserDTO(
-                "U001",
+    public UserDTO getSelectedLecturer(String lecturerId) throws Exception {
+        UserDTO selectedLecturer= new UserDTO(
+                "LEC001",
                 "Heshan",
                 "Perera",
                 "No 123",
@@ -28,19 +25,19 @@ public class StudentServiceIMPL implements StudentService {
                 "Colombo 05",
                 "Colombo",
                 "1234",
-                Role.STUDENT);
-        if (studentId.equals(selectedStudent.getUserId())){
+                Role.LECTURER);
+        if (lecturerId.equals(selectedLecturer.getUserId())){
 
-            return selectedStudent;
+            return selectedLecturer;
         }
-        throw new Exception("Student not found");
+        throw new Exception("Lecturer not found");
     }
 
     @Override
-    public List<UserDTO> getAllStudents() {
-        List<UserDTO> studentList= Arrays.asList(
+    public List<UserDTO> getAllLecturers() {
+        return Arrays.asList(
                 new UserDTO(
-                        "U002",
+                        "LEC002",
                         "Nimal",
                         "Silva",
                         "No 45",
@@ -48,9 +45,9 @@ public class StudentServiceIMPL implements StudentService {
                         "Kandy 02",
                         "Kandy",
                         "abcd",
-                        Role.ADMIN),
+                        Role.LECTURER),
                 new UserDTO(
-                        "U003",
+                        "LEC003",
                         "Kamal",
                         "Fernando",
                         "No 78",
@@ -58,9 +55,9 @@ public class StudentServiceIMPL implements StudentService {
                         "Galle 03",
                         "Galle",
                         "pass123",
-                        Role.STUDENT),
+                        Role.LECTURER),
                 new UserDTO(
-                        "U004",
+                        "LEC004",
                         "Saman",
                         "Kumara",
                         "No 10",
@@ -68,20 +65,19 @@ public class StudentServiceIMPL implements StudentService {
                         "Kurunegala",
                         "Kurunegala",
                         "xyz789",
-                        Role.STUDENT)
+                        Role.LECTURER)
 
         );
-        return studentList;
     }
 
 
     @Override
-    public void updateStudent(String studentId, UserDTO toBeUpdatedStudent) {
+    public void updateLecturer(String lecturerId, UserDTO toBeUpdatedLecturer) {
 
     }
 
     @Override
-    public void deleteStudent(String StudentId) {
+    public void deleteLecturer(String lecturerId) {
 
     }
 }

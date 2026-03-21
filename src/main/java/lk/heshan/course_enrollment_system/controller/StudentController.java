@@ -2,7 +2,6 @@ package lk.heshan.course_enrollment_system.controller;
 
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
-import lk.heshan.course_enrollment_system.impl.StudentServiceIMPL;
 
 import lk.heshan.course_enrollment_system.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowire;
@@ -30,57 +29,32 @@ public class StudentController {
     }
     @GetMapping(value = "{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getSelectedStudent(@PathVariable String studentId){
-        System.out.println("Student ID"+studentId);
-        var selectedStudent = studentService.getSelectedStudent(studentId);
-    if (studentId.equals(selectedStudent.getUserId())){
 
-        return new ResponseEntity<>(selectedStudent,HttpStatus.OK);
+        try {
+            var selectedStudent=new UserDTO();
+            selectedStudent = studentService.getSelectedStudent(studentId);
+            return new ResponseEntity<>(selectedStudent,HttpStatus.OK);
+            }catch ( Exception ex){
+        ex.printStackTrace();
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 
-    }
-    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<List<UserDTO>> getAllStudent(){
-        List<UserDTO> studentList= Arrays.asList(
-                new UserDTO(
-                        "U002",
-                        "Nimal",
-                        "Silva",
-                        "No 45",
-                        "Lake Road",
-                        "Kandy 02",
-                        "Kandy",
-                        "abcd",
-                        Role.ADMIN),
-                new UserDTO(
-                        "U003",
-                        "Kamal",
-                        "Fernando",
-                        "No 78",
-                        "Temple Road",
-                        "Galle 03",
-                        "Galle",
-                        "pass123",
-                        Role.STUDENT),
-                new UserDTO(
-                        "U004",
-                        "Saman",
-                        "Kumara",
-                        "No 10",
-                        "Station Road",
-                        "Kurunegala",
-                        "Kurunegala",
-                        "xyz789",
-                        Role.STUDENT)
 
-        );
-        return new ResponseEntity<>(studentList,HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
     @PatchMapping
     public void updateStudent(@RequestParam("stuId") String studentId,@RequestParam String stuCity,@RequestBody UserDTO toBeUpdatedStudentDto){
         System.out.println("student id:"+studentId);
         System.out.println("student city:"+stuCity);
         System.out.println("to be updated details:"+toBeUpdatedStudentDto);
+    }
+    @DeleteMapping
+    public  void deleteStudent(@RequestParam("X-studentId") String studentId){
+        System.out.println("to be deleted Id"+studentId);
     }
 }
