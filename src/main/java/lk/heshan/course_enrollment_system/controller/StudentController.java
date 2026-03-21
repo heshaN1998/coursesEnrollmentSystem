@@ -2,15 +2,13 @@ package lk.heshan.course_enrollment_system.controller;
 
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("api/v1/student")
@@ -18,31 +16,73 @@ import static org.springframework.http.HttpStatus.OK;
 public class StudentController {
 //save Student
 
-@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<UserDTO>saveStudent(@RequestBody UserDTO userDTO){
-    return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> saveStudent(@RequestBody UserDTO userDTO) {
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
 
-}
+    }
+    @GetMapping(value = "{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getSelectedStudent(@PathVariable String studentId){
+        System.out.println("Student ID"+studentId);
 
-@GetMapping(value = "{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
-public  ResponseEntity<UserDTO> getSelectedStudent(@PathVariable String studentId){
-    System.out.println("student id is"+studentId);
-    var userDTO = new UserDTO(
-            userId: "U001",
-            firstName: "Heshan",
-            lastName:"Perera",
-            addressLine1: "No 123",
-            addressLine2 :"Main Street",
-            addressLine3 :"Colombo 05",
-            city :"Colombo",
-            password: "1234",
-            Role.STUDENT
-    );
-    if(studentId.equals(userDTO.getUserId())){
-        return new ResponseEntity<>(userDTO,OK);
+        var userDTO=new UserDTO(
+                 "U001",
+                 "Heshan",
+                "Perera",
+                 "No 123",
+                 "Main Street",
+                 "Colombo 05",
+                "Colombo",
+                "1234",
+                Role.STUDENT
+                );
+    if (studentId.equals(userDTO.getUserId())){
+        return new ResponseEntity<>(userDTO,HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-}
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<List<UserDTO>> getAllStudent(){
+        List<UserDTO> studentList= Arrays.asList(
+                new UserDTO(
+                        "U002",
+                        "Nimal",
+                        "Silva",
+                        "No 45",
+                        "Lake Road",
+                        "Kandy 02",
+                        "Kandy",
+                        "abcd",
+                        Role.ADMIN),
+                new UserDTO(
+                        "U003",
+                        "Kamal",
+                        "Fernando",
+                        "No 78",
+                        "Temple Road",
+                        "Galle 03",
+                        "Galle",
+                        "pass123",
+                        Role.STUDENT),
+                new UserDTO(
+                        "U004",
+                        "Saman",
+                        "Kumara",
+                        "No 10",
+                        "Station Road",
+                        "Kurunegala",
+                        "Kurunegala",
+                        "xyz789",
+                        Role.STUDENT)
 
-
+        );
+        return new ResponseEntity<>(studentList,HttpStatus.OK);
+    }
+    @PatchMapping
+    public void updateStudent(@RequestParam("stuId") String studentId,@RequestParam String stuCity,@RequestBody UserDTO toBeUpdatedStudentDto){
+        System.out.println("student id:"+studentId);
+        System.out.println("student city:"+stuCity);
+        System.out.println("to be updated details:"+toBeUpdatedStudentDto);
+    }
 }
