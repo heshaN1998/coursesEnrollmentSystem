@@ -1,7 +1,9 @@
 package lk.heshan.course_enrollment_system.impl;
+import lk.heshan.course_enrollment_system.dao.StudentDao;
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
 import lk.heshan.course_enrollment_system.service.StudentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,11 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StudentServiceIMPL implements StudentService {
-
+private  final StudentDao studentDao;
     @Override
     public void saveStudent(UserDTO student) {
-
+        studentDao.save(student);
     }
 
     @Override
