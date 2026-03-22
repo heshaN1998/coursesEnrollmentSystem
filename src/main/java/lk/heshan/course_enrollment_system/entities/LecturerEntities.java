@@ -1,9 +1,6 @@
 package lk.heshan.course_enrollment_system.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lk.heshan.course_enrollment_system.dto.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name="lecturer")
 public class LecturerEntities {
         @Id
         private String lecId;
