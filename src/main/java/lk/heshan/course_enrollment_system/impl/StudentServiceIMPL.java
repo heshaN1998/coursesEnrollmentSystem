@@ -1,8 +1,12 @@
 package lk.heshan.course_enrollment_system.impl;
+import jakarta.transaction.Transactional;
 import lk.heshan.course_enrollment_system.dao.StudentDao;
 import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
+import lk.heshan.course_enrollment_system.entities.StudentEntities;
 import lk.heshan.course_enrollment_system.service.StudentService;
+import lk.heshan.course_enrollment_system.util.EntityDtoConversionHandle;
+import lk.heshan.course_enrollment_system.util.IDGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +17,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StudentServiceIMPL implements StudentService {
 private  final StudentDao studentDao;
+private final EntityDtoConversionHandle conversionHandle;
+
     @Override
     public void saveStudent(UserDTO student) {
-        studentDao.save(student);
+       var studentEntities=conversionHandle.toStudentEntity(student);
+       studentEntities.setStdId(IDGenerator.studentIdGen());
+       studentDao.save(studentEntities);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class EntityDtoConversionHandle {
-        prste final ModelMapper modelMapper;
+        private final ModelMapper modelMapper;
 
         public UserDTO toStudentDTO(StudentEntities student){
             return modelMapper.map(student, UserDTO.class);

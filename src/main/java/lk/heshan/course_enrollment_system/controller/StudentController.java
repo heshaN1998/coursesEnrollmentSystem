@@ -23,8 +23,9 @@ public class StudentController {
     //save Student
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> saveStudent(@RequestBody UserDTO userDTO) {
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    public ResponseEntity<Void> saveStudent(@RequestBody UserDTO studentDTO) {
+        studentService.saveStudent(studentDTO);
+        return new ResponseEntity<>( HttpStatus.CREATED);
 
     }
     @GetMapping(value = "{studentId}",produces = MediaType.APPLICATION_JSON_VALUE)
