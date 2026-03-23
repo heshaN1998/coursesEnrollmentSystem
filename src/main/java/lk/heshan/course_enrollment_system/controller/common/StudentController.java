@@ -1,16 +1,14 @@
-package lk.heshan.course_enrollment_system.controller;
+package lk.heshan.course_enrollment_system.controller.common;
 
-import lk.heshan.course_enrollment_system.dto.Role;
 import lk.heshan.course_enrollment_system.dto.UserDTO;
 
 import lk.heshan.course_enrollment_system.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Arrays;
+
 import java.util.List;
 
 
@@ -49,13 +47,22 @@ public class StudentController {
         return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
     @PatchMapping
-    public void updateStudent(@RequestParam("stuId") String studentId,@RequestParam String stuCity,@RequestBody UserDTO toBeUpdatedStudentDto){
-        System.out.println("student id:"+studentId);
-        System.out.println("student city:"+stuCity);
-        System.out.println("to be updated details:"+toBeUpdatedStudentDto);
+    public ResponseEntity<Void> updateStudent(@RequestParam("id") String studentId,@RequestParam String stuCity,@RequestBody UserDTO toBeUpdatedStudentDto){
+    try {
+        studentService.updateStudent(studentId,toBeUpdatedStudentDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     }
     @DeleteMapping
-    public  void deleteStudent(@RequestParam("X-studentId") String studentId){
-        System.out.println("to be deleted Id"+studentId);
+    public  ResponseEntity<Void> deleteStudent(@PathVariable String studentId){
+        try{
+            studentService.deleteStudent(studentId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name="lecturer")
 public class LecturerEntities {
         @Id
-        private String lecId;
+        private String id;
         private  String firstName;
         private String lastNMame;
         private String email;
