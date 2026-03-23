@@ -15,8 +15,10 @@ import java.util.List;
 public class CourseController {
  private final CourseServics courseService;
     @PostMapping
-    public ResponseEntity<CourseDTO> saveCourse( @RequestBody CourseDTO courseDTO){
-        return new ResponseEntity<>(courseDTO, HttpStatus.OK);
+    public ResponseEntity<Void> saveCourse( @RequestBody CourseDTO courseDTO){
+        courseService.saveCourse(courseDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
 }
     @GetMapping("{courseId}")
     public  ResponseEntity<CourseDTO> getSelectedCourse(@PathVariable String courseId) {
@@ -33,12 +35,26 @@ public class CourseController {
         return new ResponseEntity<>(courseService.getAllCourses(),HttpStatus.OK);
     }
     @DeleteMapping("{courseId}")
-    public void deleteCourse(@PathVariable String courseId){
+    public ResponseEntity<Void> deleteCourse(@PathVariable String courseId){
+        try {
+            courseService.deleteCourse(courseId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        }
     }
     @PatchMapping("{courseId}")
-    public  void updateCourse(@PathVariable String courseId,CourseDTO courseDto){
+    public  ResponseEntity<Void> updateCourse(@PathVariable String courseId,@RequestBody CourseDTO courseDto){
 
+            try {
+                courseService.updateCourse(courseId,courseDto);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }catch (Exception e){
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
     }
 
 
